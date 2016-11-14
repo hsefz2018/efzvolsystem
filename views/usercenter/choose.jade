@@ -1,0 +1,58 @@
+mixin giveUnion(i)
+    tr
+        td
+            a(href='#', data-toggle='modal', data-target='#myModal', data-id!=i.id)= i.name
+        td= i.time
+        td= i.pos
+        td= i.leader
+        td
+            | #{i.chosen} / #{i.limit}
+
+extends layout
+
+block content
+    body.hold-transition.skin-blue.sidebar-mini
+        .wrapper
+            include header
+            include aside
+            include modal
+            .content-wrapper
+                section.content-header
+                    h1
+                        | 基地选择
+                        small Version 1.0
+                    ol.breadcrumb
+                        li
+                            a(href='#')
+                                i.fa.fa-th 基地选择
+                        li.active 基地选择
+                section.content
+                    .row
+                        .col-md-12
+                            .box
+                                .box-header.with-border
+                                    h3.box-title 基地选择
+                                    .box-tools.pull-right
+                                        button.btn.btn-box-tool(data-widget='collapse')
+                                            i.fa.fa-minus
+                                        button.btn.btn-box-tool(data-widget='remove')
+                                            i.fa.fa-times
+                                .box-body
+                                    table.table.table-bordered.table-hover#unions
+                                        thead
+                                            th(width='20%') 基地名称
+                                            th(width='20%') 工作时间
+                                            th(width='20%') 工作地点
+                                            th(width='10%') 队长
+                                            th(width='10%') 人数
+                                        tbody
+                                            if unions
+                                                each i in unions
+                                                    +giveUnion(i)
+block script
+    script(src='/js/usercenter/choose.js')
+    script.
+        $(document).ready(function() {
+            $('#unions').DataTable();
+        });
+
